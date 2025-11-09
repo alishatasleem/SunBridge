@@ -57,14 +57,14 @@ export default function ResidentRequests({ me, users, ledger, onRequest }) {
               <optgroup label="Houses with Deficit">
                 {deficitHomes.map((u) => (
                   <option key={u.id} value={u.id}>
-                    {u.name} — {u.houseId} (needs {u.houseData.deficit} kWh)
+                    {u.name} {u.houseId} (needs {u.houseData.deficit} kWh)
                   </option>
                 ))}
               </optgroup>
               <optgroup label="Houses with Surplus">
                 {surplusHomes.map((u) => (
                   <option key={u.id} value={u.id}>
-                    {u.name} — {u.houseId} (has {u.houseData.surplus} kWh)
+                    {u.name} â€” {u.houseId} (has {u.houseData.surplus} kWh)
                   </option>
                 ))}
               </optgroup>
@@ -135,22 +135,22 @@ export default function ResidentRequests({ me, users, ledger, onRequest }) {
                       <div className="font-bold text-lg flex items-center gap-2">
                         {isReceiver ? (
                           <>
-                            <span className="text-green-600">← Receiving from</span>
+                            <span className="text-green-600">Receiving from</span>
                             <span>{from?.name || "Unknown"}</span>
                           </>
                         ) : (
                           <>
-                            <span className="text-blue-600">Sending to →</span>
+                            <span className="text-blue-600">Sending to </span>
                             <span>{to?.name || "Unknown"}</span>
                           </>
                         )}
                       </div>
                       <div className="text-sm text-gray-600 mt-1">
-                        {from?.houseId} → {to?.houseId}
+                        {from?.houseId} to {to?.houseId}
                       </div>
                       <div className="text-sm text-gray-600">
                         <Zap className="inline" size={14} />
-                        {t.amount} kWh • {new Date(t.time).toLocaleString()}
+                        {t.amount} kWh {new Date(t.time).toLocaleString()}
                       </div>
                     </div>
                     <div>

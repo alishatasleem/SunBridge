@@ -27,10 +27,10 @@ export default function AdminApprovals({ ledger = [], onApprove }) {
             >
               <div>
                 <div className="font-bold text-lg">
-                  {t.from} → {t.to}
+                  {t.from} to {t.to}
                 </div>
                 <div className="text-sm text-gray-600">
-                  {t.amount} kWh • {t.timestamp}
+                  {t.amount} kWh {t.timestamp}
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
                   Transaction ID: {t.id}
@@ -38,10 +38,10 @@ export default function AdminApprovals({ ledger = [], onApprove }) {
               </div>
 
               <button
-                className="px-6 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-all"
+                className="px-6 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold transition-all"
                 onClick={() => onApprove && onApprove(t.id)}
               >
-                ✓ Approve
+                Approve
               </button>
             </div>
           ))}
@@ -69,14 +69,14 @@ export default function AdminApprovals({ ledger = [], onApprove }) {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="font-bold text-lg">
-                    {t.from} → {t.to}
+                    {t.from} {t.to}
                   </div>
                   <div className="text-sm text-gray-600">
-                    {t.amount} kWh • {t.timestamp}
+                    {t.amount} kWh {t.timestamp}
                   </div>
                 </div>
                 <span className="px-4 py-2 rounded-lg bg-green-200 text-green-800 font-semibold">
-                  Approved ✓
+                  Approved
                 </span>
               </div>
             </div>

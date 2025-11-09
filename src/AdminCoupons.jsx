@@ -30,13 +30,13 @@ export default function AdminCoupons({ store = [], onSave, onDelete }) {
 
         <div className="grid sm:grid-cols-4 gap-4 mb-4">
           <input
-            className="border-2 border-gray-300 focus:border-blue-500 rounded px-4 py-3"
+            className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3"
             placeholder="Reward Name"
             value={draft.name}
             onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
           />
           <input
-            className="border-2 border-gray-300 focus:border-blue-500 rounded px-4 py-3"
+            className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3"
             placeholder="Cost (points)"
             type="number"
             value={draft.cost}
@@ -45,13 +45,13 @@ export default function AdminCoupons({ store = [], onSave, onDelete }) {
             }
           />
           <input
-            className="border-2 border-gray-300 focus:border-blue-500 rounded px-4 py-3"
+            className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3"
             placeholder="Icon (emoji)"
             value={draft.icon}
             onChange={(e) => setDraft((d) => ({ ...d, icon: e.target.value }))}
           />
           <input
-            className="border-2 border-gray-300 focus:border-blue-500 rounded px-4 py-3"
+            className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3"
             placeholder="Description"
             value={draft.desc}
             onChange={(e) => setDraft((d) => ({ ...d, desc: e.target.value }))}
@@ -61,9 +61,9 @@ export default function AdminCoupons({ store = [], onSave, onDelete }) {
         <div className="flex gap-3">
           <button
             type="submit"
-            className="px-6 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-all"
+            className="px-6 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold transition-all"
           >
-            💾 Save Reward
+            Save Reward
           </button>
           {draft.id && (
             <button
@@ -103,7 +103,7 @@ export default function AdminCoupons({ store = [], onSave, onDelete }) {
               <div className="flex gap-2 mt-3">
                 <button
                   onClick={() => setDraft(c)}
-                  className="flex-1 px-3 py-2 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold transition-all"
+                  className="flex-1 px-3 py-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-blue-800 font-semibold transition-all"
                 >
                   <Edit size={16} className="inline mr-1" />
                   Edit

@@ -15,6 +15,15 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
     pobox: "",
   });
 
+  // Clear per-tab state when switching to avoid lingering values AND to discourage autofill carryover
+  React.useEffect(() => {
+    if (tab === "login-resident") setLR({ houseOrEmail: "", password: "" });
+    if (tab === "login-admin") setLA({ email: "", password: "" });
+    if (tab === "register") {
+      setReg({ name: "", email: "", password: "", confirm: "", address: "", pobox: "" });
+    }
+  }, [tab]);
+
   return (
     <div className="max-w-5xl mx-auto">
       <div className="text-center mb-8">
@@ -27,9 +36,7 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
         <button
           onClick={() => setTab("login-resident")}
           className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-            tab === "login-resident" 
-              ? "bg-blue-600 text-white shadow-lg" 
-              : "bg-white hover:bg-gray-50"
+            tab === "login-resident" ? "bg-amber-600 text-white shadow-lg" : "bg-white hover:bg-gray-50"
           }`}
         >
           <LogIn className="inline -mt-1 mr-2" size={18} />
@@ -38,9 +45,7 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
         <button
           onClick={() => setTab("login-admin")}
           className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-            tab === "login-admin" 
-              ? "bg-purple-600 text-white shadow-lg" 
-              : "bg-white hover:bg-gray-50"
+            tab === "login-admin" ? "bg-purple-600 text-white shadow-lg" : "bg-white hover:bg-gray-50"
           }`}
         >
           <Shield className="inline -mt-1 mr-2" size={18} />
@@ -49,9 +54,7 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
         <button
           onClick={() => setTab("register")}
           className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-            tab === "register" 
-              ? "bg-emerald-600 text-white shadow-lg" 
-              : "bg-white hover:bg-gray-50"
+            tab === "register" ? "bg-amber-600 text-white shadow-lg" : "bg-white hover:bg-gray-50"
           }`}
         >
           <UserPlus className="inline -mt-1 mr-2" size={18} />
@@ -66,33 +69,42 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
             onLoginResident(lr.houseOrEmail.trim(), lr.password);
           }}
           className="bg-white p-8 rounded-lg shadow-lg grid gap-4 max-w-lg mx-auto"
+          autoComplete="off"
         >
           <h2 className="text-xl font-bold mb-2">Resident Login</h2>
           <div>
-            <label className="text-sm font-semibold block mb-2">Email or House ID</label>
+            <label htmlFor="residentIdentifier" className="text-sm font-semibold block mb-2">
+              Email
+            </label>
             <input
-              className="border-2 border-gray-300 focus:border-blue-500 rounded px-4 py-3 w-full"
+              id="residentIdentifier"
+              name="residentIdentifier"
+              className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
               value={lr.houseOrEmail}
               onChange={(e) => setLR((s) => ({ ...s, houseOrEmail: e.target.value }))}
               placeholder="e.g., SB-12345-ABCD or user@email.com"
-              autoComplete="username"
+              autoComplete="off" // avoid browser injecting saved usernames
               required
             />
           </div>
           <div>
-            <label className="text-sm font-semibold block mb-2">Password</label>
+            <label htmlFor="residentPassword" className="text-sm font-semibold block mb-2">
+              Password
+            </label>
             <input
+              id="residentPassword"
+              name="residentPassword"
               type="password"
-              className="border-2 border-gray-300 focus:border-blue-500 rounded px-4 py-3 w-full"
+              className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
               value={lr.password}
               onChange={(e) => setLR((s) => ({ ...s, password: e.target.value }))}
               autoComplete="current-password"
               required
             />
           </div>
-          <button 
-            type="submit" 
-            className="mt-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-3 font-semibold transition-all"
+          <button
+            type="submit"
+            className="mt-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-4 py-3 font-semibold transition-all"
           >
             Sign In
           </button>
@@ -109,36 +121,43 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
         >
           <h2 className="text-xl font-bold mb-2">Admin Login</h2>
           <div>
-            <label className="text-sm font-semibold block mb-2">Admin Email</label>
+            <label htmlFor="adminEmail" className="text-sm font-semibold block mb-2">
+              Admin Email
+            </label>
             <input
-              className="border-2 border-gray-300 focus:border-purple-500 rounded px-4 py-3 w-full"
+              id="adminEmail"
+              name="adminEmail"
+              type="email"
+              className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
               value={la.email}
               onChange={(e) => setLA((s) => ({ ...s, email: e.target.value }))}
               placeholder="admin@sunbridge.com"
-              autoComplete="username"
+              autoComplete="email"
               required
             />
           </div>
           <div>
-            <label className="text-sm font-semibold block mb-2">Password</label>
+            <label htmlFor="adminPassword" className="text-sm font-semibold block mb-2">
+              Password
+            </label>
             <input
+              id="adminPassword"
+              name="adminPassword"
               type="password"
-              className="border-2 border-gray-300 focus:border-purple-500 rounded px-4 py-3 w-full"
+              className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
               value={la.password}
               onChange={(e) => setLA((s) => ({ ...s, password: e.target.value }))}
               autoComplete="current-password"
               required
             />
           </div>
-          <button 
-            type="submit" 
-            className="mt-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg px-4 py-3 font-semibold transition-all"
+          <button
+            type="submit"
+            className="mt-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-4 py-3 font-semibold transition-all"
           >
             Admin Sign In
           </button>
-          <p className="text-xs text-gray-500 text-center">
-            Demo: Use any email containing "admin" with password length ≥ 3
-          </p>
+          <p className="text-xs text-gray-500 text-center"></p>
         </form>
       )}
 
@@ -153,9 +172,13 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
           <h2 className="text-xl font-bold mb-2">Create Account</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-semibold block mb-2">Full Name</label>
+              <label htmlFor="regName" className="text-sm font-semibold block mb-2">
+                Full Name
+              </label>
               <input
-                className="border-2 border-gray-300 focus:border-emerald-500 rounded px-4 py-3 w-full"
+                id="regName"
+                name="regName"
+                className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
                 value={reg.name}
                 onChange={(e) => setReg((s) => ({ ...s, name: e.target.value }))}
                 placeholder="John Doe"
@@ -164,10 +187,14 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
               />
             </div>
             <div>
-              <label className="text-sm font-semibold block mb-2">Email</label>
+              <label htmlFor="regEmail" className="text-sm font-semibold block mb-2">
+                Email
+              </label>
               <input
+                id="regEmail"
+                name="regEmail"
                 type="email"
-                className="border-2 border-gray-300 focus:border-emerald-500 rounded px-4 py-3 w-full"
+                className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
                 value={reg.email}
                 onChange={(e) => setReg((s) => ({ ...s, email: e.target.value }))}
                 placeholder="john@example.com"
@@ -176,10 +203,14 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
               />
             </div>
             <div>
-              <label className="text-sm font-semibold block mb-2">Password (min 6 chars)</label>
+              <label htmlFor="regPassword" className="text-sm font-semibold block mb-2">
+                Password (min 6 chars)
+              </label>
               <input
+                id="regPassword"
+                name="regPassword"
                 type="password"
-                className="border-2 border-gray-300 focus:border-emerald-500 rounded px-4 py-3 w-full"
+                className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
                 value={reg.password}
                 onChange={(e) => setReg((s) => ({ ...s, password: e.target.value }))}
                 autoComplete="new-password"
@@ -188,10 +219,14 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
               />
             </div>
             <div>
-              <label className="text-sm font-semibold block mb-2">Confirm Password</label>
+              <label htmlFor="regConfirm" className="text-sm font-semibold block mb-2">
+                Confirm Password
+              </label>
               <input
+                id="regConfirm"
+                name="regConfirm"
                 type="password"
-                className="border-2 border-gray-300 focus:border-emerald-500 rounded px-4 py-3 w-full"
+                className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
                 value={reg.confirm}
                 onChange={(e) => setReg((s) => ({ ...s, confirm: e.target.value }))}
                 autoComplete="new-password"
@@ -200,9 +235,13 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
               />
             </div>
             <div className="md:col-span-2">
-              <label className="text-sm font-semibold block mb-2">House Address</label>
+              <label htmlFor="regAddress" className="text-sm font-semibold block mb-2">
+                House Address
+              </label>
               <input
-                className="border-2 border-gray-300 focus:border-emerald-500 rounded px-4 py-3 w-full"
+                id="regAddress"
+                name="regAddress"
+                className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
                 value={reg.address}
                 onChange={(e) => setReg((s) => ({ ...s, address: e.target.value }))}
                 placeholder="123 Main St, Calgary, AB"
@@ -211,19 +250,24 @@ export default function AuthPage({ onLoginResident, onLoginAdmin, onRegister }) 
               />
             </div>
             <div>
-              <label className="text-sm font-semibold block mb-2">PO Box (unique identifier)</label>
+              <label htmlFor="regPobox" className="text-sm font-semibold block mb-2">
+                PO Box 
+              </label>
               <input
-                className="border-2 border-gray-300 focus:border-emerald-500 rounded px-4 py-3 w-full"
+                id="regPobox"
+                name="regPobox"
+                className="border-2 border-gray-300 focus:border-amber-500 rounded px-4 py-3 w-full"
                 value={reg.pobox}
                 onChange={(e) => setReg((s) => ({ ...s, pobox: e.target.value }))}
                 placeholder="12345"
+                autoComplete="off"
                 required
               />
             </div>
           </div>
-          <button 
-            type="submit" 
-            className="mt-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-4 py-3 font-semibold transition-all"
+          <button
+            type="submit"
+            className="mt-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-4 py-3 font-semibold transition-all"
           >
             Create Account
           </button>
